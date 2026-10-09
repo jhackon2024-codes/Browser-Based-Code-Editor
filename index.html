@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101116">
+  <meta name="description" content="A fast, modern browser-based code editor that works online and offline.">
+  <title>Studio — Browser Code Editor</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Studio home">
+        <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span class="brand-name">studio<span class="brand-period">.</span></span>
+        <span class="brand-divider"></span>
+        <span class="brand-product">Code editor</span>
+      </a>
+      <div class="project-heading">
+        <span class="project-overline">YOUR WORKSPACE</span>
+        <span class="project-name" id="projectName">untitled-project <span class="project-chevron">⌄</span></span>
+      </div>
+      <div class="top-actions">
+        <span class="connection"><span class="connection-dot"></span><span id="connectionLabel">Online</span></span>
+        <button class="icon-button help-button" id="shortcutsButton" type="button" title="Keyboard shortcuts" aria-label="Keyboard shortcuts">?</button>
+        <button class="save-button" id="saveButton" type="button"><span class="save-icon">↥</span> Save project</button>
+        <button class="avatar" type="button" title="Local workspace">S</button>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <aside class="activity-rail" aria-label="Workspace tools">
+        <button class="rail-button active" type="button" aria-label="Explorer" title="Explorer">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H10l2 2h6.5A1.5 1.5 0 0 1 20 7.5v11a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 18.5z"/><path d="M4.5 9h15"/></svg>
+        </button>
+        <button class="rail-button" id="searchFocusButton" type="button" aria-label="Find in file" title="Find in file">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.3"/><path d="m15.5 15.5 4.2 4.2"/></svg>
+        </button>
+        <button class="rail-button tool-rail" data-tool="source" type="button" aria-label="Source control" title="Source control">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="5" r="2"/><circle cx="18" cy="5" r="2"/><circle cx="6" cy="19" r="2"/><path d="M6 7v10m12-10a6 6 0 0 1-6 6H8"/></svg>
+        </button>
+        <button class="rail-button tool-rail" data-tool="extensions" type="button" aria-label="Extensions" title="Extensions">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4H5a1 1 0 0 0-1 1v3h3a2 2 0 1 1 0 4H4v3a1 1 0 0 0 1 1h3v-3a2 2 0 1 1 4 0v3h3a1 1 0 0 0 1-1v-3h-3a2 2 0 1 1 0-4h3V5a1 1 0 0 0-1-1h-3v3a2 2 0 1 1-4 0z"/></svg></button>
+        <button class="rail-button tool-rail" data-tool="debug" type="button" aria-label="Run and debug" title="Run and debug">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 10 6-10 6z"/><path d="M5 4v16m-2-3 2 3 2-3m-4-10 2-3 2 3"/></svg>
+        </button>
+        <div class="rail-spacer"></div>
+        <button class="rail-button tool-rail" data-tool="remote" type="button" aria-label="Remote explorer" title="Remote explorer">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18m0-18a14 14 0 0 0 0 18"/></svg>
+        </button>
+        <button class="rail-button" id="themeButton" type="button" aria-label="Toggle editor theme" title="Toggle editor theme">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16z"/></svg>
+        </button>
+        <button class="rail-button tool-rail" data-tool="account" type="button" aria-label="Account" title="Account">
+          <span class="account-rail-avatar">S</span>
+        </button>
+        <button class="rail-button settings-button" id="settingsButton" type="button" aria-label="Settings" title="Settings">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="m19.4 15 .1.1a1.7 1.7 0 1 1-2.4 2.4l-.1-.1a1.7 1.7 0 0 0-2.9 1.2v.2a1.7 1.7 0 1 1-3.4 0v-.2a1.7 1.7 0 0 0-2.9-1.2l-.1.1a1.7 1.7 0 1 1-2.4-2.4l.1-.1a1.7 1.7 0 0 0-1.2-2.9H4a1.7 1.7 0 1 1 0-3.4h.2A1.7 1.7 0 0 0 5.4 7l-.1-.1a1.7 1.7 0 1 1 2.4-2.4l.1.1a1.7 1.7 0 0 0 2.9-1.2v-.2a1.7 1.7 0 1 1 3.4 0v.2A1.7 1.7 0 0 0 17 4.6l.1-.1a1.7 1.7 0 1 1 2.4 2.4l.1.1a1.7 1.7 0 0 0 1.2 2.9h.2a1.7 1.7 0 1 1 0 3.4h-.2a1.7 1.7 0 0 0-1.3 1.7z"/></svg>
+        </button>
+      </aside>
+
+      <aside class="sidebar" id="sidebar">
+        <div class="explorer-view" id="explorerView">
+          <div class="sidebar-title"><span>EXPLORER</span><button class="subtle-icon" id="newFileButton" type="button" title="New file" aria-label="Create new file">＋</button></div>
+          <button class="folder-heading" id="folderToggle" type="button"><span class="folder-caret">⌄</span><span class="folder-icon">▰</span><span>UNTITLED-PROJECT</span><span class="folder-menu">···</span></button>
+          <div class="file-list" id="fileList" role="list"></div>
+          <div class="sidebar-bottom">
+            <div class="workspace-note"><span class="note-sparkle">✳</span><span><strong>Your ideas, in motion.</strong>
+              <small>A little space to make something great.</small></span>
+            </div>
+            <button class="sidebar-section" id="outlineToggle" type="button"><span class="section-caret">›</span> OUTLINE <span class="section-count" id="outlineCount">0</span></button>
+            <div class="outline-list" id="outlineList" hidden></div>
+          </div>
+        </div>
+        <div class="tool-sidebar-view" id="toolSidebarView" hidden></div>
+      </aside>
+
+      <section class="main-column">
+        <div class="tabbar" id="tabbar">
+          <div class="tab-list" id="tabList" role="tablist" aria-label="Open files"></div>
+          <div class="tab-actions">
+            <button class="icon-button" id="downloadButton" type="button" title="Download current file" aria-label="Download current file"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5"/><path d="M5 17v3h14v-3"/></svg></button>
+            <span class="tab-action-divider"></span>
+            <button class="icon-button" id="togglePreviewButton" type="button" title="Toggle live preview" aria-label="Toggle live preview"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18m-6 0v11"/></svg></button>
+            <button class="icon-button" id="moreButton" type="button" title="More options" aria-label="More options">···</button>
+          </div>
+        </div>
+
+        <div class="editor-toolbar">
+          <div class="breadcrumbs" id="breadcrumbs"><span>untitled-project</span><span class="crumb-slash">/</span><span id="breadcrumbFile">index.html</span></div>
+          <div class="editor-tools">
+            <label class="search-box" aria-label="Find in current file"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.3"/><path d="m15.5 15.5 4.2 4.2"/></svg><input id="findInput" type="search" placeholder="Find" autocomplete="off"><kbd>⌘ F</kbd></label>
+            <button class="run-button" id="runButton" type="button"><span class="play-icon">▶</span> Run <kbd>⌘ ↵</kbd></button>
+            <button class="debug-button" id="debugButton" type="button" title="Run current HTML preview or JavaScript file in an isolated browser sandbox"><span>▷</span> Debug</button>
+          </div>
+        </div>
+
+        <div class="editor-wrap">
+          <div class="code-editor" id="codeEditor">
+            <div class="line-numbers" id="lineNumbers" aria-hidden="true"></div>
+            <div class="code-surface">
+              <pre class="highlight-layer" id="highlightLayer" aria-hidden="true"></pre>
+              <textarea id="codeInput" aria-label="Code editor" autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false" wrap="off"></textarea>
+            </div>
+            <div class="editor-watermark"><span>✳</span></div>
+          </div>
+          <section class="preview-panel" id="previewPanel" aria-label="Live preview">
+            <div class="preview-header"><div class="preview-title"><span class="preview-live-dot"></span><span>LIVE PREVIEW</span></div><div class="preview-actions"><span id="previewState">Up to date</span><button class="icon-button" id="refreshPreviewButton" type="button" title="Refresh preview" aria-label="Refresh preview">↻</button><button class="icon-button" id="openPreviewButton" type="button" title="Open preview in new tab" aria-label="Open preview in new tab">↗</button></div></div>
+            <div class="preview-canvas"><iframe id="previewFrame" title="Live website preview" sandbox="allow-scripts allow-forms allow-modals"></iframe><div class="preview-empty" id="previewEmpty" hidden><span>◇</span><strong>No preview for this file</strong><small>Open index.html to see your project.</small></div></div>
+          </section>
+        </div>
+
+        <section class="bottom-panel" id="bottomPanel">
+          <div class="bottom-heading"><div class="panel-tabs"><button class="panel-tab active" type="button">PROBLEMS <span class="problem-count" id="problemCount">0</span></button><button class="panel-tab" type="button" id="consoleTab">CONSOLE <span class="console-indicator" id="consoleIndicator"></span></button><button class="panel-tab" type="button" id="outputTab">OUTPUT</button></div><div class="bottom-actions"><button class="icon-button" id="clearConsoleButton" type="button" title="Clear console" aria-label="Clear console">⊘</button><button class="icon-button" id="toggleBottomButton" type="button" title="Hide panel" aria-label="Hide panel">⌄</button></div></div>
+          <div class="panel-content" id="panelContent"><div class="empty-problems"><span class="check-badge">✓</span><span><strong>Looking good.</strong> No problems detected in your workspace.</span><button id="panelMessage" type="button">0 errors<span> · </span>0 warnings</button></div></div>
+        </section>
+
+        <footer class="statusbar">
+          <div class="status-left"><span class="status-branch"><span>⑂</span> main</span><span class="status-checks">✓ 0</span><span class="status-errors" id="statusErrors">⚠ 0</span><span class="status-message" id="statusMessage">Ready when you are.</span></div>
+          <div class="status-right"><span id="cursorPosition">Ln 1, Col 1</span><span id="indentStatus">Spaces: 2</span><span id="encodingStatus">UTF-8</span><span id="languageStatus">HTML</span><span class="status-bell">♧</span></div>
+        </footer>
+      </section>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <div class="modal-backdrop" id="modalBackdrop" hidden>
+    <section class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle"><button class="dialog-close" id="dialogClose" type="button" aria-label="Close dialog">×</button><div class="dialog-icon">✳</div><h2 id="dialogTitle">Create a new file</h2><p id="dialogDescription">Give your next idea a name.</p><form id="fileForm"><label class="dialog-label" for="fileNameInput">FILE NAME</label><input id="fileNameInput" class="dialog-input" type="text" placeholder="e.g. styles.css" autocomplete="off" required><div class="dialog-error" id="dialogError" aria-live="polite"></div><div class="dialog-actions"><button class="cancel-button" id="dialogCancel" type="button">Cancel</button><button class="confirm-button" id="dialogConfirm" type="submit">Create file <span>↗</span></button></div></form></section>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
